@@ -110,7 +110,7 @@ metadata:
 
 ## Tips
 
-- **HTML in text**: You can use `<b>` tags for bold text in PDF (automatically stripped in DOCX)
+- **HTML in text**: You can use `<b>` tags for bold text in PDF. In DOCX, these tags are automatically stripped from bullet items only.
 - **Long text**: YAML supports multi-line strings with proper line breaking
 - **Structure**: Maintain the nesting structure for subsections to render correctly
 - **Validation**: Test your config with a quick generation to verify formatting

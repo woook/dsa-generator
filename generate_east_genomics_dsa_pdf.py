@@ -5,6 +5,8 @@ East Genomics branding — dual logo header, simplified front matter.
 
 import argparse
 import yaml
+import sys
+from pathlib import Path
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
     HRFlowable, PageBreak, KeepTogether,
@@ -22,10 +24,11 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUTPUT_PDF  = "/home/wook/Documents/cwd/east_genomics_data_sharing_agreement.pdf"
-OUTPUT_DOCX = "/home/wook/Documents/cwd/east_genomics_data_sharing_agreement.docx"
-LOGO_L  = "/home/wook/Documents/cwd/logo_east_genomics.png"   # left logo
-LOGO_R  = "/home/wook/Documents/cwd/logo_east_genomics_new"    # right logo
+BASE_DIR = Path(__file__).resolve().parent
+OUTPUT_PDF = str(BASE_DIR / "east_genomics_data_sharing_agreement.pdf")
+OUTPUT_DOCX = str(BASE_DIR / "east_genomics_data_sharing_agreement.docx")
+LOGO_L = str(BASE_DIR / "logo_east_genomics.png")   # left logo
+LOGO_R = str(BASE_DIR / "logo_east_genomics_new")   # right logo
 
 PAGE_W, PAGE_H = A4
 MARGIN = 25.4 * mm
@@ -113,6 +116,82 @@ args = parser.parse_args()
 # Load YAML configuration
 with open(args.config, 'r') as f:
     config = yaml.safe_load(f)
+
+# Validate YAML schema
+def validate_config(config):
+    """Validate the YAML configuration has required structure."""
+    required_keys = ['header', 'footer', 'metadata', 'document_details',
+                     'document_control', 'sections', 'declaration']
+
+    for key in required_keys:
+        if key not in config:
+            print(f"Error: Missing required top-level key '{key}' in configuration", file=sys.stderr)
+            sys.exit(1)
+
+    # Validate header
+    if 'title' not in config['header']:
+        print("Error: Missing 'title' in 'header' section", file=sys.stderr)
+        sys.exit(1)
+
+    # Validate footer
+    if 'text' not in config['footer']:
+        print("Error: Missing 'text' in 'footer' section", file=sys.stderr)
+        sys.exit(1)
+
+    # Validate metadata
+    for field in ['pdf_title', 'pdf_author']:
+        if field not in config['metadata']:
+            print(f"Error: Missing '{field}' in 'metadata' section", file=sys.stderr)
+            sys.exit(1)
+
+    # Validate document_details
+    for field in ['title', 'reference_label', 'reference_tooltip']:
+        if field not in config['document_details']:
+            print(f"Error: Missing '{field}' in 'document_details' section", file=sys.stderr)
+            sys.exit(1)
+
+    # Validate document_control
+    for field in ['heading', 'text']:
+        if field not in config['document_control']:
+            print(f"Error: Missing '{field}' in 'document_control' section", file=sys.stderr)
+            sys.exit(1)
+
+    # Validate sections
+    if not isinstance(config['sections'], list):
+        print("Error: 'sections' must be a list", file=sys.stderr)
+        sys.exit(1)
+
+    for idx, section in enumerate(config['sections']):
+        if not isinstance(section, dict):
+            print(f"Error: Section {idx} must be a dict", file=sys.stderr)
+            sys.exit(1)
+        if 'title' not in section:
+            print(f"Error: Missing 'title' in section {idx}", file=sys.stderr)
+            sys.exit(1)
+        if 'content' not in section:
+            print(f"Error: Missing 'content' in section {idx}", file=sys.stderr)
+            sys.exit(1)
+
+    # Validate declaration
+    for field in ['title', 'text', 'fields', 'footer_text']:
+        if field not in config['declaration']:
+            print(f"Error: Missing '{field}' in 'declaration' section", file=sys.stderr)
+            sys.exit(1)
+
+    if not isinstance(config['declaration']['fields'], list):
+        print("Error: 'declaration.fields' must be a list", file=sys.stderr)
+        sys.exit(1)
+
+    for idx, field in enumerate(config['declaration']['fields']):
+        if not isinstance(field, dict):
+            print(f"Error: Declaration field {idx} must be a dict", file=sys.stderr)
+            sys.exit(1)
+        for key in ['label', 'name', 'tooltip']:
+            if key not in field:
+                print(f"Error: Missing '{key}' in declaration field {idx} (label: {field.get('label', 'unknown')})", file=sys.stderr)
+                sys.exit(1)
+
+validate_config(config)
 
 # ---------------------------------------------------------------------------
 # Standard table style
@@ -231,8 +310,8 @@ title_block = Table([
 ], colWidths=[TEXT_W])
 
 header_table = Table(
-    [[logo_right, title_block, logo_left]],
-    colWidths=[LOGO_R_W, TEXT_W, LOGO_L_W],
+    [[logo_left, title_block, logo_right]],
+    colWidths=[LOGO_L_W, TEXT_W, LOGO_R_W],
 )
 header_table.setStyle(TableStyle([
     ("VALIGN",        (0, 0), (-1, -1), "MIDDLE"),
@@ -293,7 +372,12 @@ for field in config['declaration']['fields']:
     ])
 
 row_heights = [10 * mm] + [12 * mm] * len(config['declaration']['fields'])
-decl_table  = Table(decl_data, colWidths=[LABEL_W, FIELD_COL], rowHeights=row_heights)
+decl_table = Table(
+    decl_data,
+    colWidths=[LABEL_W, FIELD_COL],
+    rowHeights=row_heights,
+    repeatRows=1,
+)
 decl_table.setStyle(TableStyle([
     ("BACKGROUND",    (0, 0), (-1, 0),  NHS_BLUE),
     ("TEXTCOLOR",     (0, 0), (-1, 0),  WHITE),
@@ -307,7 +391,7 @@ decl_table.setStyle(TableStyle([
     ("GRID",          (0, 0), (-1, -1), 0.5, MID_GREY),
 ]))
 
-story.append(KeepTogether(decl_table))
+story.append(decl_table)
 story.append(Spacer(1, 10))
 story.append(HRFlowable(width="100%", thickness=0.5, color=MID_GREY))
 story.append(Spacer(1, 4))
@@ -357,12 +441,12 @@ header_table.rows[0].cells[0].width = Inches(2.2)
 header_table.rows[0].cells[1].width = Inches(2.1)
 header_table.rows[0].cells[2].width = Inches(2.2)
 
-# Add right logo
+# Add left logo
 try:
     para = header_table.rows[0].cells[0].paragraphs[0]
     para.alignment = WD_ALIGN_PARAGRAPH.LEFT
     run = para.add_run()
-    run.add_picture(LOGO_R, width=Inches(1.8))
+    run.add_picture(LOGO_L, width=Inches(1.73))
 except:
     pass
 
@@ -374,12 +458,12 @@ run.font.size = Pt(16)
 run.font.color.rgb = RGBColor(46, 116, 181)
 run.bold = True
 
-# Add left logo
+# Add right logo
 try:
     para = header_table.rows[0].cells[2].paragraphs[0]
     para.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     run = para.add_run()
-    run.add_picture(LOGO_L, width=Inches(1.73))
+    run.add_picture(LOGO_R, width=Inches(1.8))
 except:
     pass
 
