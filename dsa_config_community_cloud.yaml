@@ -1,0 +1,144 @@
+# Configuration for Data Sharing Agreement
+# Community Cloud Synthetic Data
+
+# Header
+header:
+  title: "Data Sharing Agreement"
+
+# Document details section
+document_details:
+  title: "Data Sharing Agreement Community Cloud Synthetic Data"
+  reference_label: "Bioinformatics Document Reference"
+  reference_tooltip: "Bioinformatics Document Reference"
+
+# Document control text
+document_control:
+  heading: "Document control"
+  text: "The controlled copy of this document is maintained by East Genomics. Any copies of this document held outside of that area, whether electronic or paper, are considered uncontrolled copies and must be verified as current before use."
+
+# Main content sections
+sections:
+  - title: "1. Purpose"
+    content:
+      - "This Data Sharing Agreement (DSA) governs the access to and use of data made available within the Community Cloud project environment. It sets out the responsibilities of all participating individuals and their employing organisations with respect to data access, use, security, and confidentiality."
+      - "The Community Cloud project is a collaborative service development initiative bringing together bioinformatics professionals from across East Genomics to support the development and improvement of shared genomic bioinformatics services."
+
+  - title: "2. Parties"
+    content:
+      - subsection_title: "2.1 Participating Organisations"
+        content:
+          - "All participating organisations must be East Genomics member institutions. Participation is open to all members subject to agreement to the terms set out in this DSA."
+      - subsection_title: "2.2 Participating Individuals"
+        content:
+          - "All individuals granted access to the Community Cloud environment must:"
+          - bullets:
+              - "Be directly employed by an East Genomics member institution at the time of access; and"
+              - "Have read, understood, and signed this agreement prior to being granted access."
+          - "Access will be reviewed and, where necessary, revoked if an individual ceases to meet the above eligibility criteria."
+
+  - title: "3. Data Description"
+    content:
+      - "Participants will be granted access to the following category of data:"
+      - bullets:
+          - "<b>Anonymised, synthetic data</b> — data that has been artificially generated or fully anonymised for the sole purpose of supporting service development activities within this project."
+      - "No real patient data, personal data, or identifiable information of any kind is intentionally included in the Community Cloud environment. All data has been generated or processed specifically to support technical and service development work without risk of re-identification."
+
+  - title: "4. Permitted Use"
+    content:
+      - "Participants may use data made available in the Community Cloud environment solely for:"
+      - bullets:
+          - "Development, testing, and evaluation of bioinformatics pipelines, tools, and services as part of the Community Cloud project; and"
+          - "Collaborative activities directly related to the project's service development objectives."
+      - "Any use of data outside these purposes is strictly prohibited."
+
+  - title: "5. Obligations of Participants"
+    content:
+      - "By signing this agreement, each participant agrees to the following obligations:"
+      - subsection_title: "5.1 No Attempt to Identify Individuals"
+        content:
+          - "Participants must not, under any circumstances:"
+          - bullets:
+              - "Attempt to identify, re-identify, or derive any identifiable information from any data accessed within the Community Cloud environment;"
+              - "Combine data from the Community Cloud environment with any other dataset in a manner that could lead to the identification of any individual; or"
+              - "Share any data, outputs, or derived information with any third party for the purpose of identification."
+      - subsection_title: "5.2 Data Must Not Leave the Environment"
+        content:
+          - "Participants must not remove, transfer, copy, or otherwise cause any data — including raw data, processed outputs, or derivatives — to leave the Community Cloud AWS environment by any means, including but not limited to:"
+          - bullets:
+              - "Download to local or personal devices;"
+              - "Transfer to external storage, repositories, or cloud services outside the designated environment;"
+              - "Transmission by email, messaging platforms, or any other communication channel."
+          - "All work must be performed within, and all outputs must remain within, the designated Community Cloud AWS account."
+      - subsection_title: "5.3 Access Credentials and Security"
+        content:
+          - "Participants must:"
+          - bullets:
+              - "Keep their access credentials secure and not share them with any other individual;"
+              - "Report any suspected security incident, unauthorised access, or breach to the project lead immediately;"
+              - "Not attempt to access any data, systems, or resources beyond those required for their role in the project."
+      - subsection_title: "5.4 Compliance with Relevant Policy and Law"
+        content:
+          - "Participants must conduct all activities in compliance with:"
+          - bullets:
+              - "The UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018;"
+              - "NHS information governance policies and their employing organisation's relevant policies;"
+              - "Any applicable NHS England guidance pertaining to genomic data and information security."
+
+  - title: "6. Technical Environment"
+    content:
+      - "All project activities must be conducted within the designated AWS account provided for the Community Cloud project. This account is managed on behalf of East Genomics and is subject to technical controls designed to support compliance with this agreement, including:"
+      - bullets:
+          - "Restricted egress controls to prevent unauthorised data transfer out of the environment;"
+          - "Access logging and audit trail capabilities;"
+          - "Role-based access controls limiting each participant's access to resources relevant to their work."
+      - "Participants must not attempt to circumvent, disable, or otherwise interfere with any technical controls applied to the environment."
+
+  - title: "7. Breach and Consequences"
+    content:
+      - "Any breach of this agreement, including any attempt to identify individuals from the data or to remove data from the environment, must be reported immediately to the project lead and the participant's employing organisation's Caldicott Guardian or Data Protection Officer."
+      - "Breaches may result in:"
+      - bullets:
+          - "Immediate revocation of access to the Community Cloud environment;"
+          - "Disciplinary action in accordance with the participant's employing organisation's policies;"
+          - "Referral to the Information Commissioner's Office (ICO) or other relevant regulatory bodies where required by law."
+
+  - title: "8. Agreement Duration and Review"
+    content:
+      - "This agreement comes into effect upon signature and remains in force for the duration of the participant's involvement in the Community Cloud project, or until superseded by a revised version of this agreement. This agreement will be reviewed annually or following any significant change to the project scope, data types, or applicable legislation."
+
+# Participant declaration section
+declaration:
+  title: "9. Participant Declaration"
+  text: "I confirm that I have read and understood this Data Sharing Agreement. I agree to comply with all obligations set out herein for the duration of my participation in the Community Cloud project."
+  fields:
+    - label: "Full Name"
+      name: "fullName"
+      tooltip: "Enter your full name"
+    - label: "Job Title"
+      name: "jobTitle"
+      tooltip: "Enter your job title"
+    - label: "Institution"
+      name: "inst"
+      tooltip: "Enter your East Genomics member institution"
+    - label: "Employer"
+      name: "employer"
+      tooltip: "Enter your employing organisation"
+    - label: "Email Address"
+      name: "email"
+      tooltip: "Enter your email address"
+    - label: "Date"
+      name: "declDate"
+      tooltip: "Enter the date (DD/MM/YYYY)"
+    - label: "Signature"
+      name: "signature"
+      tooltip: "Sign here"
+  footer_text: "This agreement should be retained by both the participant and their employing institution."
+
+# Footer text for PDF/DOCX
+footer:
+  text: "East Genomics Data Sharing Agreement — Community Cloud Synthetic Data"
+
+# PDF metadata
+metadata:
+  pdf_title: "East Genomics Data Sharing Agreement — Community Cloud"
+  pdf_author: "East Genomics"
