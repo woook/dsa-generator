@@ -1,0 +1,70 @@
+# Test Configuration for Data Sharing Agreement
+# Modified values to test configurability
+
+# Header
+header:
+  title: "TEST Data Sharing Agreement"
+
+# Document details section
+document_details:
+  title: "TEST Project Data Sharing Agreement"
+  reference_label: "Test Document Reference"
+  reference_tooltip: "Test Document Reference"
+
+# Document control text
+document_control:
+  heading: "Document control"
+  text: "This is a TEST document control statement for verification purposes."
+
+# Main content sections
+sections:
+  - title: "1. Test Purpose"
+    content:
+      - "This is a test configuration to verify that the YAML-driven approach works correctly."
+      - "All content should be configurable through this YAML file."
+
+  - title: "2. Test Parties"
+    content:
+      - subsection_title: "2.1 Test Organizations"
+        content:
+          - "Test organizations content goes here."
+      - subsection_title: "2.2 Test Individuals"
+        content:
+          - "Test individuals must:"
+          - bullets:
+              - "First test bullet point"
+              - "Second test bullet point"
+          - "Additional test paragraph after bullets."
+
+  - title: "3. Test Section with Bullets"
+    content:
+      - "Introduction paragraph for test section:"
+      - bullets:
+          - "<b>Bold test bullet</b> — with description"
+          - "Regular test bullet"
+      - "Conclusion paragraph."
+
+# Participant declaration section
+declaration:
+  title: "9. Test Declaration"
+  text: "This is a TEST declaration text to verify configuration loading."
+  fields:
+    - label: "Test Name"
+      name: "testName"
+      tooltip: "Enter test name"
+    - label: "Test Role"
+      name: "testRole"
+      tooltip: "Enter test role"
+    - label: "Test Date"
+      name: "testDate"
+      tooltip: "Enter test date"
+  footer_text: "TEST footer text for verification."
+
+# Footer text for PDF/DOCX
+footer:
+  text: "TEST Data Sharing Agreement — Verification Document"
+
+# PDF metadata
+metadata:
+  pdf_title: "TEST Data Sharing Agreement"
+  pdf_author: "Test Organization"
